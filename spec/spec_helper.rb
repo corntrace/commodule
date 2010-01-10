@@ -6,8 +6,12 @@ rescue LoadError
 end
 
 plugin_spec_dir = File.dirname(__FILE__)
-ActiveRecord::Base.logger = Logger.new(plugin_spec_dir + "/debug.log")
+#ActiveRecord::Base.logger = Logger.new(plugin_spec_dir + "/debug.log")
 
 databases = YAML::load(IO.read(plugin_spec_dir + "/db/database.yml"))
 ActiveRecord::Base.establish_connection(databases[ENV["DB"] || "sqlite3"])
 load(File.join(plugin_spec_dir, "db", "schema.rb"))
+
+def fake_rails_root
+  File.join(File.dirname(__FILE__), 'rails_root')
+end

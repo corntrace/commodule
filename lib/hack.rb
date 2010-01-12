@@ -27,3 +27,19 @@ module Rails
     end
   end
 end
+
+module ActionMailer
+  class Base
+    adv_attr_accessor :custom_template_root
+    def template_path
+      "#{custom_template_root || template_root}/#{mailer_name}"
+    end
+    def template_root
+      if custom_template_root
+        self.view_paths = ActionView::Base.process_view_paths(custom_template_root)
+      else
+        self.class.template_root
+      end
+    end
+  end
+end

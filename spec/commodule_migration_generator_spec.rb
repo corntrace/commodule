@@ -13,6 +13,7 @@ describe "Commodule Migration Generator" do
     Rails::Generator::Scripts::Generate.new.run(["commodule_migration", "shopping_order", "add_qty_back_order_to_order_items", 'qty_back_order:integer', '-t'])
     puts IO.read(Dir.glob("#{migration_root}/*").first)
     IO.read(Dir.glob("#{migration_root}/*").first).should match("add_column :order_items, :qty_back_order, :integer")
+    Dir.glob("db/migrate/*.rb").sort.last.should match("add_qty_back_order_to_order_items")
     FileUtils.rm Dir.glob("db/migrate/*.rb").sort.last
   end
 

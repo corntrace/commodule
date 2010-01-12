@@ -9,13 +9,21 @@ ActionController::Routing::Routes.instance_eval(%Q{
   end
 }) if defined? ActionController
 
-#module ActionController
-  #class Base
-    #def render_for_file(template_path, status = nil, layout = nil, locals = {}) #:nodoc:
-      ## orders/new
-      #template_path = "#{RAILS_ROOT}/vendor/plugins/commodules/spec/rails_root/vendor/modules/test_mod/app/views/#{template_path}"
-      #logger.info("Rendering #{template_path}" + (status ? " (#{status})" : '')) if logger
-      #render_for_text @template.render(:file => template_path, :locals => locals, :layout => layout), status
-    #end
-  #end
-#end
+module Rails
+  module Generator
+    class Manifest
+      # Replay recorded actions.
+      def replay(target = nil)
+        send_actions(target || @target, @actions)
+        puts "Copying generated migration file to db/migrate"
+        FileUtils.cp Dir.glob("#{RAILS_ROOT}/#{@actions.first.second.second}/*.rb").sort.last, FileUtils.mkdir_p("#{RAILS_ROOT}/db/migrate")
+      end
+
+      # Rewind recorded actions.
+      def rewind(target = nil)
+        # TODO FIRST: create a reversed migration file to db/migrate
+        send_actions(target || @target, @actions.reverse)
+      end
+    end
+  end
+end

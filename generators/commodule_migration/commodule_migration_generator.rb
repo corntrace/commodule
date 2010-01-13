@@ -1,3 +1,4 @@
+require 'rails_generator/commands'
 require File.dirname(__FILE__)+'/../../lib/hack'
 
 class CommoduleMigrationGenerator < Rails::Generator::NamedBase
@@ -39,12 +40,5 @@ EOS
   def modules_list
     Dir.glob("#{RAILS_ROOT}/vendor/modules/*").map {|dir| File.basename(dir)}
   end
-
-  def migration_file_path
-    Dir.glob("#{RAILS_ROOT}/vendor/modules/#{@mod_name}/db/migrate/*.rb").select do |file|
-      filename =~ %r{#{file_name}}
-    end.first
-  end
-  
 
 end

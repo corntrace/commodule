@@ -1,0 +1,28 @@
+Commodule
+=========
+
+Attachable modules for rails apps. More descriptions come soon...
+
+
+Example
+=======
+
+Example will come soon...
+
+TODOs
+=====
+1. **Features**
+  * Generate reversed migrate file when destroying a module migrate file
+	* Generator to generate the basic structure of module
+	* Rake task to attach a module from a file path or a git repo
+	* Rake task to detach a module
+	* Rake task to merge a module to the main rails app
+	* Rake task to run spec and spec:rcov in custom module
+	* Rake task to run cucumber test in custom module
+2. **Rspec Tests**
+  * Tests for ActionMailer::Base's hacked method
+3. **Cucumber Tests**
+  * All the cucumber tests for all features
+
+
+Copyright (c) 2010 Kevin Fu, released under the **MIT** license

@@ -21,7 +21,13 @@ module Rails
 
       # Rewind recorded actions.
       def rewind(target = nil)
-        # TODO FIRST: create a reversed migration file to db/migrate
+        # creating a reversed migration file to db/migrate
+        puts "Generating reversed migration file in db/migrate"
+        source_file_name = Dir.glob("#{RAILS_ROOT}/#{@actions.first.second.second}/*.rb").sort.last
+        target_file_name = FileUtils.mkdir_p("#{RAILS_ROOT}/db/migrate/")+\
+          File.basename(source_file_name).gsub(/^(\d*)/, "#{1.second.since(Time.now.utc).strftime("%Y%m%d%H%M%S")}_reversed")
+        FileUtils.cp source_file_name, target_file_name 
+        # TODO reversed the target migration file's content 
         send_actions(target || @target, @actions.reverse)
       end
     end
